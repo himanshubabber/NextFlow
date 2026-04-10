@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Best practice: Use env variable instead of hardcoded string
+}
+
+model User {
+  id        String     @id // Clerk User ID
+  email     String     @unique
+  name      String?
+  imageUrl  String?
+  workflows Workflow[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Workflow {
+  id        String   @id @default(cuid())
+  userId    String   
+  name      String   @default("Untitled Workflow")
+  nodes     Json     // React Flow nodes array
+  edges     Json     // React Flow edges array
+  
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  runs      Run[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Run {
+  id            String          @id @default(cuid())
+  workflowId    String
+  workflow      Workflow        @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  
+  // Link to Trigger.dev
+  triggerRunId  String?         @unique 
+  
+  status        RunStatus       @default(RUNNING)
+  scope         RunScope        @default(FULL) 
+  
+  startedAt     DateTime        @default(now())
+  completedAt   DateTime?
+  duration      Int?            // in milliseconds
+  
+  nodeRuns      NodeExecution[]
+
+  @@index([workflowId])
+}
+
+model NodeExecution {
+  id          String    @id @default(cuid())
+  runId       String
+  run         Run       @relation(fields: [runId], references: [id], onDelete: Cascade)
+  
+  nodeId      String    // The ID of the node from React Flow
+  nodeType    String    
+  status      RunStatus
+  
+  inputs      Json?     
+  outputs     Json?     
+  
+  error       String?   
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+  duration    Int?
+
+  @@index([runId])
+}
+
+enum RunStatus {
+  PENDING
+  RUNNING
+  SUCCESS
+  FAILED
+  PARTIAL
+}
+
+enum RunScope {
+  FULL
+  PARTIAL
+  SINGLE
+}

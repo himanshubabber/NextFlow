@@ -1,0 +1,114 @@
+{
+  "build": {
+  },
+  "cliPackageVersion": "4.4.3",
+  "config": {
+    "dirs": [
+      "src/trigger"
+    ],
+    "project": "proj_pzzysxspbxxoawqqbjor"
+  },
+  "configPath": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/trigger.config.mjs",
+  "contentHash": "139d6823731c12232eecf00c9fb65373",
+  "customConditions": [
+  ],
+  "deploy": {
+    "env": {
+    }
+  },
+  "environment": "dev",
+  "externals": [
+    {
+      "name": "import-in-the-middle",
+      "version": "1.11.0"
+    }
+  ],
+  "files": [
+    {
+      "entry": "src/trigger/geminiTask.ts",
+      "out": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/src/trigger/geminiTask.mjs"
+    },
+    {
+      "entry": "src/trigger/processTask.ts",
+      "out": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/src/trigger/processTask.mjs"
+    }
+  ],
+  "indexWorkerEntryPoint": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-index-worker.mjs",
+  "otelImportHook": {
+    "include": [
+    ]
+  },
+  "outputHashes": {
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-index-worker.mjs": "Pd8RxQ6NGbY",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-index-worker.mjs.map": "lZXXU3Pukbg",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs": "oK8ti/oDxMc",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs.map": "SgZupBGOSIs",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/src/trigger/geminiTask.mjs": "cwZvKzpECjg",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/src/trigger/geminiTask.mjs.map": "e1owjKeFelo",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/src/trigger/processTask.mjs": "b6pUe75sX5M",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/src/trigger/processTask.mjs.map": "/1XHH9s0vsg",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/trigger.config.mjs": "JXX12cTtfFo",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/trigger.config.mjs.map": "xn3UieGbRdA",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-6L3DBTMP.mjs": "pnVzG1Cs3O8",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-6L3DBTMP.mjs.map": "JZmVvNwm4gI",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-6QDZNWWT.mjs": "uCnojIHRO1A",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-6QDZNWWT.mjs.map": "0n6vcC61q7I",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-CTDAWCTK.mjs": "pjmNPzgoVKg",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-CTDAWCTK.mjs.map": "922Py0nEmuE",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-FUV6SSYK.mjs": "Mad/q9MtDLc",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-FUV6SSYK.mjs.map": "9IFojZihDyA",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-WZGQJWAS.mjs": "Y9pY3LOEHVY",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-WZGQJWAS.mjs.map": "LMPzUuAiOIM",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-YS6MS67T.mjs": "U5jcghADcvw",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-YS6MS67T.mjs.map": "b5fqpiUBWK4",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-YWPWLCTP.mjs": "ABVt9Vl1wiA",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/chunk-YWPWLCTP.mjs.map": "9Pwea9eleHQ",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/crypto.node-5HPPZ5PO.mjs": "Hosiis4RK5g",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/crypto.node-5HPPZ5PO.mjs.map": "f+DirqJ/vQY",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/crypto.node-OZIG7C7V.mjs": "xL7AWEo5LhA",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/crypto.node-OZIG7C7V.mjs.map": "0b4tlwmkM3g",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/esm-HF64XN43.mjs": "/ASyNSMg03k",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/esm-HF64XN43.mjs.map": "CYqZQcavdAI",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/esm-UJZXZXFH.mjs": "vyj8FKrApaI",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/esm-UJZXZXFH.mjs.map": "VON93E1In1A",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/getMachineId-bsd-CQRW3DPG.mjs": "244piLhuSIA",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/getMachineId-bsd-CQRW3DPG.mjs.map": "dIKKZ8MMNl8",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/getMachineId-darwin-VNZGFVBR.mjs": "960+ecDyqc0",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/getMachineId-darwin-VNZGFVBR.mjs.map": "xJrfS7fTZLk",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/getMachineId-linux-TYVV4ZLT.mjs": "Mu4BzqEE9PY",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/getMachineId-linux-TYVV4ZLT.mjs.map": "iGLn8Cz4sPg",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/getMachineId-unsupported-5IRX77GI.mjs": "Ca/HGT5QNLM",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/getMachineId-unsupported-5IRX77GI.mjs.map": "L7KXQNW7Eqw",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/getMachineId-win-KAUWWGCN.mjs": "9b/UQB1v9SE",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/getMachineId-win-KAUWWGCN.mjs.map": "O6wx6Q5hFOU",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/s2s-3ZRIPYYD.mjs": "+6xdP4AKcy8",
+    "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/s2s-3ZRIPYYD.mjs.map": "cMXIJWjI/3w"
+  },
+  "outputPath": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM",
+  "packageVersion": "4.4.3",
+  "runWorkerEntryPoint": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs",
+  "runtime": "node",
+  "sources": {
+    "package.json": {
+      "contentHash": "a9e69a217564544b9c6c9d1953f118ff",
+      "contents": "eJx1k8FygyAQhu8+BeO5rmJtMskphz6HMxQ2DqmCA8S0zfTdO4BE27E3+f7f5d9dvWeE5IoNmB9JrvDDnXt9y588ndBYqZUXKqBQRToaOTHn7c5cMSDLjRydzY/knhFCSC5wSuWIf36K+O0qe/EQ4mmWrGPGPaR4mqVeqqCgDU8ZId/hVoEjKoGKS1xdfeI9mvfSl7l4nLd7qIDSVO3Uad31WHao0DAnJyyYDL4K6gYWnzOy69CAwKm04j1YGmjgOTmEdqhCny3dw+pVOQxoIqdAoUn8YkdxnuvUi91H9ZTuoIY6UYOMR3yAeqkRcCH08J8kB9ZhwY0eU4IKaPXLEzac4q3yWa3UHLyGCvaJf12tYyosrn3x5er1EqbX7T2MRtqBlbyXGPfX7oAelvGdHJP9TSrBrS1HbR23cV/N4vgc0ZZKC4yhqj/KY0YtPWxJaU4ref6IPPzDCq7VWXbF9jpiNxttrLr4nT7kCD9GHFyYWfad/QDLmOTB"
+    },
+    "src/trigger/geminiTask.ts": {
+      "contentHash": "5d625835c9f4427025523470ea91465c",
+      "contents": "eJyFVVFu20YQ/ecpXokgoACZSm0jHxTUVLVVhYgVu7EToDAMe0uOqG3IXWJ3KZtQdYoeoOgNe4RiuRRFxUb7ZWtn9s2bN2+HvCilMtjAMP0VWyyVLOD/aBTPMlJhSuuRTr+O1if+2OO73LmUWU5zEqSY4WuaxvubWRMbZV3wiHF/7HmjEWJhSC1ZQlhKBVOXBM2WZGqPd5E5FVzwK1bnkqXYeICutaHiSsmiNO8iaKO4yMYeUGlSC9KaZdQ/FjKlOO2fFJRy9i5q0AAuci7onBm2OwHS5ld7A6MRfmKa3p6CRCJTSttIm1zwgm7q8qAosLV/tvgDosrzsbf1PHpq5Eqk0AZZ09eNFXnSaB3Y2jyN4LvQUZ4X/tADVCUiMF2LBEHpdIgOZRlg8kNL3YGzkn+gGhOUSiakdUhiHc4vL+cXs/v57OPs0/Qm/jK7n8b306v4/sPsV0eZLxF85+4OYFZKPkLQI2ZKSRX4Z5/im/hsehFhehXD4hdcay4ycAESa66kKEiY0B+MvR6ZTX8ww4PxDdvhDN1IsLWUXU/jHkJGYhpj0pB5brWgZdwWNaruxmivy5zCXGbBwz9//fk3PsqUcPtq4+pu7yLMniipjG1jzVmrK07wc870KgzDhx0urA0+N/2aFeH4zfFbFDKlHPF5r5xpDyeOdZiR2ZNd2FCwQZsPl7sf+cnR0pY9KhWtOT36w13m9oDFosoNL2TKcuQy40mEK6aMBlOK1SiIi1ZlO/9GZl6wjEZrnpJEwDKmsJKDIVilmuGgcNNBylgu2EE7DqIpEIGJ+vYOE9ze9fl8H2Kaprh2NWOhjaoSw6XQ1lKlIk3CtOnWY30LDLphoV8qLCu9CjYw9GQiPPQxI7za9BG2D408rVA9WseO1qKxVhA3EnyxEgwcLWn1SHu8nAlfv3ZuDPeL4b9JdqGXd0l/o3wLHNrj4UHifps8S96Fevnb7v+XNThxGny2Q/6lIlV7/yd1k2U17r3aVuI9bGtpsh4xJAyq7mGUeyse+EiRrnKDCdgj4+0rCduvAp05mKBHq2unu15KoakDcHjh7vww2/aCSXcptL+DfQfNorNnL6y5bgMoMpUSlIKK0tR7LH+P41LQe9AWdD9Pt2W6R9x+GJAwk6wQkC3YvKnBs41F35Bpt5QUjmbkD9GkdCr1OmsCYfukQy6SvEpJB/7pm1N/0Lfy8+YXl+ezi/tFfL2Y3py9jzATulKEWlYK0xjXpkq5tOb5nRKDFdP7hckS+6UBCfZbTmmj0qFFXbGGXCuE/UAOPeusfwFeCJ5C"
+    },
+    "src/trigger/processTask.ts": {
+      "contentHash": "41f9b87fcbdb8c2f75c7bdc8dc2a996d",
+      "contents": "eJxtkk1u2zAQhfc6xYPQhQ2otlPvZLhNUSCAgS6CNtlnII5UIvxR+WNHcHWFXqEX6OF6hIK0HAdpV5JGw/feN0Ope+sCjgjkHzGidVajvA5Odh27heD90ovH5X5dboqCn3JzY40P6J1t2Pu7dG6bj8+OBSBFjXL691azkFRWBeCiqUF+MA1mPQ3KkqiT69BzjbJxti/xAyU/BUdNKDeITtXwwUnTbdCTI+0/1CAzYJxj+x7JCzmKVbxQtps9/Pn18zduT9bSdHhznJwWyWZEa92LWnRqfJhviqyzXGJnQHBMKpGJ2ARpDdjspbNGswkVBhtxsFEJRM+4blvdc7c8PWAdCI2yUeDj7e4semMdwjcGeS+7LAPB2lY4MLzUUVHg3NBfYgtWNICMgOMQXYqlrZCtZIH7L5+zNB1IBhg+JF4tPc9mjr1Ve87D8RzupGYbw7lcYb1areZnXtk+ryEPB9vtdlrDfBotzvZHTN+Aj01KWSO4yNWlnpf1YrBVYr/3kZQaJhkPwtf18lOakDTkhsQC22b6ZNxzAvZRhWdZzd5Tly7ITlN3aQsWV/UV/PdIjuEoSFuew4yb/DKeOF8j/B/g3/jF6wA3jjRjup4sQAGrVb16N/lm17Eqxvmm+AuiFA4S"
+    },
+    "trigger.config.ts": {
+      "contentHash": "ecef8985fbeb1d88adfe9e9486ae552a",
+      "contents": "eJxVkU9r3DAQxe/6FA9ftgUTm+xNuTQkLSwkt6WXUorWGnuV2JIzM944G/a7Fzvr/AHBaN7oPX6MigLKoWmIL6oU69BcqJjQ9YkVr/BUh0g38wAn1Jw6ZD8Wg6dDIf6xOKyzK2NonE2eaje0+sX67dUARYHtPgi6QRSd02qPlzQwth9p8E72u+TYo+f0QJWCqTZYOotsuv3rj8cXGaXfjWNyz09Pu4fEWQ6D6fAQNXRkkcXkKcsN0Kbmjg7UWmRtambpDehnlIEJOnHVqfXEoDGIClz0qFJUF6K8caqTR9ShJTGADywWfzLhqjivI/u7EBQFrjfze0Ek8mhTbIjhB3YaUpwCOjfenluLdVm+05NyILGYVjZH/QojeYsVRbdrya8QBDE9vwubeEuHFULE7/Xs+axbKA80h2P5miV7hrhWpa5XsVjnixriNnSUBt3Ee7G4LMsy/3B8ma3LT8PaVZrY4nIR2EWfunCkM8Ysn6Zyys3p+5X5D1J5x34="
+    },
+    "tsconfig.json": {
+      "contentHash": "880407450cba02e06baaefb61201f316",
+      "contents": "eJxlUUFOwzAQvOcVKx+jNgYuSD0hoR6oqJAoSEgIISfeNqaOHdlOCap658oL+CJPQE5s2oSTNTPr2Z3dfQJACl3VQqK5q53QypIZ7BMAAOKY2aAjMyDz1cXZ+SWZ9LwUOZnBcwcACNdVUHqQCYeG5RKPLFqFrSMdfAkuTEr9vvDtnGkwkHYr6luRX5dYbEeKM6JwQ07peSVGHNql5o3EG+XQ6HooVp3kE4WJBvw9Wi0bvwRfkTeKSzSxxHhxhwur1TK6nDgLqyVzyHttlOrNtt7RICvc1IMJUAo/31+f8FAKC8KCKxHIYvUEa8k2BNaiDb6qMFihckwOPWvZbER3rXiIfXj9YljVpTxuHeAw2H7OLD4a70myGLFmrjyeH4Bc0fTEH4Bk1JqCptHyJYnGB2/hh5UNx78/Xf8pql3GM2djmzSl6X/YRpz5T9R91GjpqLSXOO5GchJyEWzHA2iOr1W4iS9LDskvuefJEA=="
+    }
+  },
+  "target": "dev"
+}

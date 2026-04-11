@@ -9,13 +9,24 @@ export default function LlmNode({ id, data }: { id: string; data: any }) {
   // Requirement: Pulse animation when running
   const isRunning = data.isRunning;
 
+  // 📝 Logic for Exporting the AI response
+  const downloadResult = () => {
+    if (!data.result) return;
+    const element = document.createElement("a");
+    const file = new Blob([data.result], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = `galaxy-ai-result-${id.substring(0, 5)}.txt`;
+    document.body.appendChild(element);
+    element.click();
+  };
+
   return (
     <div className={`bg-white border-2 rounded-2xl p-5 shadow-2xl w-80 transition-all duration-500 relative ${
       isRunning ? 'node-running-glow scale-[1.03]' : 'border-slate-200'
     }`}>
       
       {/* Target Handles (Left Side - Inputs) */}
-      <div className="flex flex-col gap-8 absolute -left-3 top-1/2 -translate-y-1/2">
+      <div className="flex flex-col gap-6 absolute -left-3 top-1/2 -translate-y-1/2">
         <div className="relative group">
           <Handle type="target" position={Position.Left} id="system" className="w-4 h-4 bg-blue-500 border-2 border-white shadow-sm" />
           <span className="absolute left-6 -top-1 text-[8px] font-bold text-blue-500 opacity-0 group-hover:opacity-100 uppercase bg-white px-1">System</span>
@@ -27,6 +38,10 @@ export default function LlmNode({ id, data }: { id: string; data: any }) {
         <div className="relative group">
           <Handle type="target" position={Position.Left} id="image" className="w-4 h-4 bg-emerald-500 border-2 border-white shadow-sm" />
           <span className="absolute left-6 -top-1 text-[8px] font-bold text-emerald-500 opacity-0 group-hover:opacity-100 uppercase bg-white px-1">Image</span>
+        </div>
+        <div className="relative group">
+          <Handle type="target" position={Position.Left} id="video" className="w-4 h-4 bg-emerald-600 border-2 border-white shadow-sm" />
+          <span className="absolute left-6 -top-1 text-[8px] font-bold text-emerald-600 opacity-0 group-hover:opacity-100 uppercase bg-white px-1">Video</span>
         </div>
       </div>
 
@@ -73,6 +88,16 @@ export default function LlmNode({ id, data }: { id: string; data: any }) {
             )}
           </div>
         </div>
+
+        {/* ✅ NEW: Export Button added here */}
+        {data.result && !isRunning && (
+          <button 
+            onClick={downloadResult}
+            className="mt-1 w-full py-2 bg-slate-100 hover:bg-purple-600 hover:text-white text-slate-600 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 border border-slate-200"
+          >
+            📥 Export Analysis
+          </button>
+        )}
       </div>
 
       {/* Source Handle (Right Side - Output) */}

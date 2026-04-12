@@ -284,8 +284,26 @@ export default function WorkflowPage() {
           <button onClick={runWorkflow} className="flex items-center gap-2 text-[10px] font-bold px-6 py-2 bg-blue-600 text-white rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.5)] hover:bg-blue-700 uppercase ml-1 transition-all active:scale-95">
             <Play size={14} fill="currentColor" /> RUN
           </button>
-          <div className="ml-2 border-l border-white/10 pl-4 shrink-0 invert">{isSignedIn ? <UserButton /> : <SignInButton />}</div>
-        </div>
+          <div className="ml-2 border-l border-white/10 pl-4 shrink-0 flex items-center h-full">
+  {isSignedIn ? (
+    <UserButton 
+      /* 🚀 Removed afterSignOutUrl to fix TS error */
+      appearance={{
+        elements: {
+          userButtonAvatarBox: "w-8 h-8 border border-white/20"
+        }
+      }}
+    />
+  ) : (
+    <div className="text-[10px] font-black uppercase tracking-widest text-white hover:text-purple-400 transition-colors cursor-pointer px-2">
+      <SignInButton mode="modal">
+        <span>SIGN IN</span>
+      </SignInButton>
+    </div>
+  )}
+</div>
+</div>
+
       </header>
 
       <main className="flex flex-1 overflow-hidden relative">

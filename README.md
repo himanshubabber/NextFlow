@@ -1,10 +1,10 @@
-# 🌌 NextFlow v1.0 (Galaxy AI Pipeline)
+# 🌌 NextFlow v1.0 
 
 A high-performance, node-based visual workflow engine designed for multi-modal AI orchestration. Built with the **MERN Stack**, **React Flow**, and **Gemini 3 Flash**, NextFlow allows users to build, execute, and persist complex AI logic through a professional drag-and-drop interface.
 
 ## 🔗 Project Links & Contact
 * **Live Demo:** [https://next-flow-8u66.vercel.app/](https://next-flow-8u66.vercel.app/)
-* **Developer:** Himanshu Singh (Final Year CSE, DTU)
+* **Developer:** Himanshu (Final Year CSE, DTU)
 * **Contact Email:** [himanshusingh2087@gmail.com](mailto:himanshusingh2087@gmail.com)
 
 ---
@@ -50,6 +50,7 @@ The system is built on a modular node registry, allowing specialized components 
 
 ## 👨‍💻 About the Author
 
-**Himanshu Singh** Final Year Computer Science Engineering student at **Delhi Technological University (DTU)**.  
+**Himanshu** Final Year Computer Science Engineering student at **Delhi Technological University (DTU)**. 
+* **LinkedIn:** [Himanshu Singh](https://www.linkedin.com/in/himanshu-singh-94802b257/)
 * **Knight-ranked** Competitive Programmer on LeetCode.
 * Full-Stack Specialist with deep expertise in AI-integrated system design.

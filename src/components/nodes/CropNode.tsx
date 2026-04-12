@@ -5,6 +5,10 @@ import ReactCrop, { type Crop, PixelCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import useFlowStore from '@/store/useFlowStore';
 
+/**
+ * Precision Crop Node
+ * Logic remains untouched. Theme updated to Blue to match Input/Processor categories.
+ */
 export default function CropNode({ id, data }: { id: string; data: any }) {
   const updateNodeData = useFlowStore((state) => state.updateNodeData);
   
@@ -30,7 +34,7 @@ export default function CropNode({ id, data }: { id: string; data: any }) {
   const imgRef = useRef<HTMLImageElement>(null);
 
   // Essential for stopping React Flow from intercepting clicks/drags
-  const stopPropagation = (e: React.KeyboardEvent | React.MouseEvent) => {
+  const stopPropagation = (e: React.KeyboardEvent | React.MouseEvent | React.PointerEvent) => {
     e.stopPropagation();
     if (e.nativeEvent) e.nativeEvent.stopImmediatePropagation();
   };
@@ -96,16 +100,17 @@ export default function CropNode({ id, data }: { id: string; data: any }) {
   };
 
   return (
-    <div className="bg-white border-2 border-orange-400 rounded-2xl p-4 shadow-2xl w-80 relative">
-      <Handle type="target" position={Position.Left} className="w-4 h-4 bg-orange-500 border-2 border-white -left-2" />
+    /* Node Container: border color set to blue-400 for standard state */
+    <div className="bg-white border-2 border-blue-400 rounded-2xl p-4 shadow-2xl w-80 relative transition-all duration-300">
+      <Handle type="target" position={Position.Left} className="w-4 h-4 bg-blue-500 border-2 border-white -left-2" />
 
-      <div className="flex items-center gap-2 mb-3 text-orange-600">
-        <span className="bg-orange-100 p-1.5 rounded-lg font-bold">✂️</span>
+      <div className="flex items-center gap-2 mb-3 text-blue-600">
+        <span className="bg-blue-100 p-1.5 rounded-lg font-bold">✂️</span>
         <label className="text-[10px] font-black uppercase tracking-widest">Precision Crop Node</label>
       </div>
 
       {!imgSrc ? (
-        <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-orange-100 rounded-lg cursor-pointer hover:bg-orange-50 transition-colors mb-2 text-orange-400">
+        <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-blue-100 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors mb-2 text-blue-400">
           <span className="text-[10px] font-bold uppercase tracking-tight">Select Image</span>
           <input type="file" className="hidden" accept="image/*" onChange={onSelectFile} />
         </label>
@@ -113,7 +118,7 @@ export default function CropNode({ id, data }: { id: string; data: any }) {
         <div className="space-y-4">
           
           <div 
-            className="w-full h-auto min-h-[200px] max-h-96 rounded-lg border border-orange-100 nodrag nopan nowheel bg-slate-50 flex items-center justify-center p-1 overflow-hidden"
+            className="w-full h-auto min-h-[200px] max-h-96 rounded-lg border border-blue-100 nodrag nopan nowheel bg-slate-50 flex items-center justify-center p-1 overflow-hidden"
             onMouseDown={stopPropagation}
           >
             <div className="inline-flex relative items-center justify-center">
@@ -146,7 +151,7 @@ export default function CropNode({ id, data }: { id: string; data: any }) {
                   <input 
                     type="number"
                     value={typeof val === 'number' ? Math.round(val) : 0}
-                    className="nodrag nopan nowheel w-full text-[10px] font-bold text-orange-600 bg-white border border-slate-200 rounded p-1 text-center outline-none focus:ring-2 focus:ring-orange-400 pointer-events-auto"
+                    className="nodrag nopan nowheel w-full text-[10px] font-bold text-blue-600 bg-white border border-slate-200 rounded p-1 text-center outline-none focus:ring-2 focus:ring-blue-400 pointer-events-auto"
                     onKeyDown={stopPropagation}
                     onMouseDown={stopPropagation}
                     onPointerDown={stopPropagation}
@@ -160,7 +165,7 @@ export default function CropNode({ id, data }: { id: string; data: any }) {
         </div>
       )}
 
-      <Handle type="source" position={Position.Right} className="w-4 h-4 bg-orange-500 border-2 border-white -right-2" />
+      <Handle type="source" position={Position.Right} className="w-4 h-4 bg-blue-500 border-2 border-white -right-2" />
     </div>
   );
 }

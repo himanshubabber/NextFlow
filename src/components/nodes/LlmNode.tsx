@@ -21,6 +21,7 @@ export default function LlmNode({ id, data }: { id: string; data: any }) {
   };
 
   return (
+    /* Reverted to White Background with Dynamic Thinking Glow */
     <div className={`bg-white border-2 rounded-2xl p-5 shadow-2xl w-80 transition-all duration-500 relative ${
       isRunning ? 'node-running-glow scale-[1.03]' : 'border-slate-200'
     }`}>
@@ -89,7 +90,6 @@ export default function LlmNode({ id, data }: { id: string; data: any }) {
           </div>
         </div>
 
-        {/* NEW: Export Button added here */}
         {data.result && !isRunning && (
           <button 
             onClick={downloadResult}
@@ -100,7 +100,6 @@ export default function LlmNode({ id, data }: { id: string; data: any }) {
         )}
       </div>
 
-      {/* Source Handle (Right Side - Output) */}
       <Handle 
         type="source" 
         position={Position.Right} 

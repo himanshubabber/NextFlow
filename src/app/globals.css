@@ -1,34 +1,108 @@
 @import "tailwindcss";
 
-/* The Krea.ai Glow Effect (Tailwind v4 Compatible) */
-@layer components {
-  .node-running-glow {
-    border-color: #a855f7 !important;
-    animation: purple-glow 2s infinite;
-  }
+/**
+ * Global Theme Configuration
+ */
+:root {
+  background-color: #ffffff;
 }
 
-@keyframes purple-glow {
+body {
+  background-color: #ffffff !important;
+  color: #0f172a;
+}
+
+/**
+ * React Flow Canvas Pattern
+ * Dark grey dots for high-contrast visibility.
+ */
+.react-flow__background-pattern circle {
+  fill: #333333 !important;
+  opacity: 0.25 !important;
+}
+
+/**
+ * Node Interaction Logic
+ * Specific glow colors based on node types for better UX.
+ */
+
+/* 1. Text Input Node - Blue Glow */
+.react-flow__node-textNode:hover > div {
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1) !important;
+}
+
+.react-flow__node-textNode.selected > div {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.3) !important;
+  transform: scale(1.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. Gemini/LLM Node - Purple Glow & Thinking Animation */
+.react-flow__node-llmNode:hover > div {
+  border-color: rgba(168, 85, 247, 0.4) !important;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.1) !important;
+}
+
+.react-flow__node-llmNode.selected > div {
+  border-color: #a855f7 !important;
+  box-shadow: 0 10px 30px -5px rgba(168, 85, 247, 0.3) !important;
+  transform: scale(1.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/**
+ * Thinking State Animation (Gemini)
+ */
+@keyframes nodePulse {
   0% {
-    box-shadow: 0 0 0 0px rgba(168, 85, 247, 0.6);
+    box-shadow: 0 0 10px 2px rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.3);
   }
-  70% {
-    box-shadow: 0 0 0 15px rgba(168, 85, 247, 0);
+  50% {
+    box-shadow: 0 0 35px 12px rgba(168, 85, 247, 0.45);
+    border-color: rgba(168, 85, 247, 1);
   }
   100% {
-    box-shadow: 0 0 0 0px rgba(168, 85, 247, 0);
+    box-shadow: 0 0 10px 2px rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.3);
   }
 }
 
-/* Ensure React Flow handles stay visible and purple */
-.react-flow__handle {
-  width: 10px !important;
-  height: 10px !important;
-  background-color: #a855f7 !important;
-  border: 2px solid white !important;
+.node-running-glow {
+  animation: nodePulse 2s infinite ease-in-out !important;
+  background-color: #ffffff !important;
+  z-index: 100 !important;
 }
 
-/* Custom grid color for the background dots */
-.react-flow__background {
-  background-color: #f8fafc;
+/**
+ * UI Controls and Attribution
+ */
+.react-flow__controls button {
+  background-color: #ffffff !important;
+  fill: #475569 !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+
+
+/* Keeping the original bottom-right watermark hidden for a custom feel */
+.react-flow__attribution {
+  display: none !important;
+}
+
+/* Hover state for Crop Node */
+.react-flow__node-processNode:hover > div {
+  border-color: rgba(37, 99, 235, 0.4) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1) !important;
+  transition: all 0.2s ease;
+}
+
+/* Selected state for Crop Node */
+.react-flow__node-processNode.selected > div {
+  border-color: #2563eb !important; /* Vivid Blue */
+  box-shadow: 0 10px 30px -5px rgba(37, 99, 235, 0.3) !important;
+  transform: scale(1.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

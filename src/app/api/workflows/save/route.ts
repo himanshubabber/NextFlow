@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  // 1. Get Authentication details from Clerk
+  // 1. Authenticate user session using Clerk
   const { userId } = await auth();
   const clerkUser = await currentUser();
 
@@ -15,29 +15,29 @@ export async function POST(req: Request) {
     const { nodes, edges, workflowId, name } = await req.json();
     const userEmail = clerkUser.emailAddresses[0].emailAddress;
 
-    // 2. SYNC USER: Find user by email (unique) to avoid P2002 conflict
-    // According to your schema, 'id' is the primary key (Clerk ID)
+    // 2. Sync User: Search by Primary Key (id) to prevent unique constraint conflicts
+    // This ensures we update existing records even if the email has changed
     await prisma.user.upsert({
       where: { 
-        email: userEmail 
+        id: userId 
       },
       update: {
-        // Sync name and image if they changed in Clerk
+        email: userEmail,
         name: `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`.trim(),
         imageUrl: clerkUser.imageUrl,
       },
       create: {
-        id: userId, // Mapping Clerk's userId to Prisma's id
+        id: userId,
         email: userEmail,
         name: `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`.trim(),
         imageUrl: clerkUser.imageUrl,
       },
     });
 
-    // 3. UPSERT WORKFLOW: Save or Update the flow
+    // 3. Save Workflow: Create new record or update existing by workflowId
     const workflow = await prisma.workflow.upsert({
       where: { 
-        // Ensure we don't try to upsert with a string like "new-workflow"
+        // Prevent upsertion if the ID is a placeholder string
         id: workflowId && workflowId !== "new-workflow" ? workflowId : "non-existent-id" 
       },
       update: {
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
         name: name || "Untitled Workflow",
       },
       create: {
-        userId: userId, // Foreign key to the User model
+        userId: userId, // Link to the user via foreign key
         nodes,
         edges,
         name: name || "Untitled Workflow",
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error("Workflow Save Error:", error.message);
     return NextResponse.json(
-      { error: "Failed to save workflow" }, 
+      { error: "Internal Server Error" }, 
       { status: 500 }
     );
   }

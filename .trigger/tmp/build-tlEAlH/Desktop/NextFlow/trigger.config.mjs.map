@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../trigger.config.ts"],
-  "sourcesContent": ["// trigger.config.ts\nimport { defineConfig } from \"@trigger.dev/sdk/v3\";\n\nexport default defineConfig({\n  // This must match your Trigger.dev dashboard project ref\n  project: \"proj_pzzysxspbxxoawqqbjor\",\n\n  runtime: \"node\",\n  logLevel: \"log\",\n\n  // Ensure this folder exists and contains your task files\n  dirs: [\"src/trigger\"],\n\n  // AI tasks need longer durations\n  maxDuration: 300,\n\n  retries: {\n    // Fixed: 'enabled' is now 'enabledInDev' in V3\n    enabledInDev: true, \n    default: {\n      maxAttempts: 3,\n      minTimeoutInMs: 2000,\n      maxTimeoutInMs: 30000,\n      factor: 2,\n      randomize: true,\n    },\n  },\n\n  build: {},\n});\nexport const resolveEnvVars = undefined;"],
-  "mappings": ";;;;;;;;;AAAA;AAGA,IAAO,yBAAQ,aAAa;AAAA;AAAA,EAE1B,SAAS;AAAA,EAET,SAAS;AAAA,EACT,UAAU;AAAA;AAAA,EAGV,MAAM,CAAC,aAAa;AAAA;AAAA,EAGpB,aAAa;AAAA,EAEb,SAAS;AAAA;AAAA,IAEP,cAAc;AAAA,IACd,SAAS;AAAA,MACP,aAAa;AAAA,MACb,gBAAgB;AAAA,MAChB,gBAAgB;AAAA,MAChB,QAAQ;AAAA,MACR,WAAW;AAAA,IACb;AAAA,EACF;AAAA,EAEA,OAAO,CAAC;AACV,CAAC;AACM,IAAM,iBAAiB;",
-  "names": []
-}

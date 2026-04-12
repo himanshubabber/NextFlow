@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../../../src/trigger/processTask.ts"],
-  "sourcesContent": ["import { task } from \"@trigger.dev/sdk/v3\";\n\nexport const processTask = task({\n  id: \"process-media\",\n  run: async (payload: { type: \"crop\" | \"extract\"; url: string; params?: any }) => {\n    console.log(`🎬 Processing ${payload.type} for ${payload.url}`);\n\n    // In a real production environment, you would use @ffmpeg/ffmpeg or a cloud API\n    // For the assignment demo, we simulate the processing delay and return a modified URL\n    await new Promise((resolve) => setTimeout(resolve, 3000));\n\n    if (payload.type === \"crop\") {\n      return { \n        success: true, \n        url: payload.url, // Usually returns a S3/Cloudinary URL of the cropped result\n        message: \"Image cropped to 1:1 square ratio\" \n      };\n    }\n\n    return { \n      success: true, \n      url: payload.url, \n      message: \"Frame extracted at 00:02\" \n    };\n  },\n});\n"],
-  "mappings": ";;;;;;;;;;AAAA;AAEO,IAAM,cAAc,KAAK;AAAA,EAC9B,IAAI;AAAA,EACJ,KAAK,8BAAO,YAAqE;AAC/E,YAAQ,IAAI,iBAAiB,QAAQ,IAAI,QAAQ,QAAQ,GAAG,EAAE;AAI9D,UAAM,IAAI,QAAQ,CAAC,YAAY,WAAW,SAAS,GAAI,CAAC;AAExD,QAAI,QAAQ,SAAS,QAAQ;AAC3B,aAAO;AAAA,QACL,SAAS;AAAA,QACT,KAAK,QAAQ;AAAA;AAAA,QACb,SAAS;AAAA,MACX;AAAA,IACF;AAEA,WAAO;AAAA,MACL,SAAS;AAAA,MACT,KAAK,QAAQ;AAAA,MACb,SAAS;AAAA,IACX;AAAA,EACF,GApBK;AAqBP,CAAC;",
-  "names": []
-}

@@ -1,4 +1,3 @@
-// src/components/nodes/TextNode.tsx
 import React, { memo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
 import useFlowStore from '@/store/useFlowStore';

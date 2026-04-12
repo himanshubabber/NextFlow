@@ -9,7 +9,7 @@ export default function LlmNode({ id, data }: { id: string; data: any }) {
   // Requirement: Pulse animation when running
   const isRunning = data.isRunning;
 
-  // 📝 Logic for Exporting the AI response
+  // Logic for Exporting the AI response
   const downloadResult = () => {
     if (!data.result) return;
     const element = document.createElement("a");
@@ -89,13 +89,13 @@ export default function LlmNode({ id, data }: { id: string; data: any }) {
           </div>
         </div>
 
-        {/* ✅ NEW: Export Button added here */}
+        {/* NEW: Export Button added here */}
         {data.result && !isRunning && (
           <button 
             onClick={downloadResult}
             className="mt-1 w-full py-2 bg-slate-100 hover:bg-purple-600 hover:text-white text-slate-600 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 border border-slate-200"
           >
-            📥 Export Analysis
+             Export Analysis
           </button>
         )}
       </div>

@@ -3,8 +3,7 @@ import React from 'react';
 import { Handle, Position } from 'reactflow';
 
 export default function ProcessNode({ id, data }: { id: string; data: any }) {
-  // Knight Tip: Node ke wrapper mein 'nodrag' kabhi mat lagana 
-  // varna node move nahi hoga.
+ 
   
   return (
     <div className="bg-white border-2 border-blue-500 rounded-2xl p-4 shadow-xl w-56 relative transition-all hover:shadow-blue-100">

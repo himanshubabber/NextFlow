@@ -77,7 +77,7 @@ const FlowCanvas = () => {
   }, [onConnectStore]);
 
   return (
-    // 🚀 FIX 1: Removed 'overflow-hidden' from wrapper to prevent event clipping
+    
     <div className="absolute inset-0 w-full h-full pointer-events-auto">
       <ReactFlow
         nodes={nodes}
@@ -91,7 +91,7 @@ const FlowCanvas = () => {
         onDrop={onDrop}
         onDragOver={onDragOver}
         fitView
-        // 🚀 FIX 2: Explicitly enabling drag and selectable props
+        
         nodesDraggable={true}
         nodesConnectable={true}
         elementsSelectable={true}
@@ -229,11 +229,11 @@ export default function WorkflowPage() {
           <span className="font-bold text-lg tracking-tight">NextFlow</span>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={exportWorkflow} className="text-[10px] font-black px-3 py-2 border rounded-xl hover:bg-slate-50 uppercase">Export</button>
-          <label className="text-[10px] font-black px-3 py-2 border rounded-xl hover:bg-slate-50 uppercase cursor-pointer">
+          {/* <button onClick={exportWorkflow} className="text-[10px] font-black px-3 py-2 border rounded-xl hover:bg-slate-50 uppercase">Export</button> */}
+          {/* <label className="text-[10px] font-black px-3 py-2 border rounded-xl hover:bg-slate-50 uppercase cursor-pointer">
             Import
             <input type="file" className="hidden" accept=".json" onChange={handleImport} />
-          </label>
+          </label> */}
           <button onClick={saveWorkflow} className="text-[10px] font-black px-3 py-2 border rounded-xl hover:bg-slate-50 uppercase">Save</button>
           <button onClick={runWorkflow} className="text-[10px] font-black px-5 py-2 bg-purple-600 text-white rounded-xl shadow-md hover:bg-purple-700 uppercase ml-1">Run</button>
           <div className="ml-2 border-l pl-4 shrink-0">{isSignedIn ? <UserButton /> : <SignInButton />}</div>
@@ -245,13 +245,13 @@ export default function WorkflowPage() {
           <div className="space-y-4">
             <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Input Components</h3>
             <div onDragStart={(e) => onDragStart(e, 'textNode', 'Text Input')} draggable className="p-3 border rounded-xl text-xs font-semibold cursor-grab hover:bg-slate-50 transition-all flex items-center gap-3">
-              📝 Text Input
+               Text Input
             </div>
             <div onDragStart={(e) => onDragStart(e, 'uploadNode', 'Image Asset', 'image')} draggable className="p-3 border border-emerald-50 rounded-xl text-xs font-semibold cursor-grab hover:bg-emerald-50 transition-all flex items-center gap-3">
-              🖼️ Image Asset
+              Image Asset
             </div>
             <div onDragStart={(e) => onDragStart(e, 'videoNode', 'Video Asset', 'video')} draggable className="p-3 border border-emerald-50 rounded-xl text-xs font-semibold cursor-grab hover:bg-emerald-50 transition-all flex items-center gap-3">
-              🎥 Video Asset
+              Video Asset
             </div>
           </div>
 
@@ -273,7 +273,7 @@ export default function WorkflowPage() {
           </div>
         </aside>
 
-        {/* 🚀 FIX 3: Added 'pointer-events-auto' to ensure pane interaction is allowed */}
+        
         <div className="flex-grow relative bg-[#f8fafc] z-0 pointer-events-auto">
           <ReactFlowProvider><FlowCanvas /></ReactFlowProvider>
         </div>

@@ -122,7 +122,7 @@ export default function Sidebar() {
           </div>
         ) : (
           <div className="h-40 flex flex-col items-center justify-center text-center opacity-50">
-            <span className="text-2xl mb-2">🖱️</span>
+            {/* <span className="text-2xl mb-2">🖱️</span> */}
             <p className="text-[11px] text-slate-400 italic px-6">
               Select a node on the canvas to view or edit its properties.
             </p>

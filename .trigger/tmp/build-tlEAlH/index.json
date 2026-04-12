@@ -1,0 +1,42 @@
+{
+  "configPath": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-tlEAlH/Desktop/NextFlow/trigger.config.mjs",
+  "customConditions": [
+  ],
+  "queues": [
+  ],
+  "runtime": "node",
+  "runtimeVersion": "22.13.1",
+  "tasks": [
+    {
+      "entryPoint": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-tlEAlH/Desktop/NextFlow/src/trigger/geminiTask.mjs",
+      "filePath": "src/trigger/geminiTask.ts",
+      "id": "gemini-llm",
+      "maxDuration": 300,
+      "retry": {
+        "factor": 2,
+        "maxAttempts": 3,
+        "maxTimeoutInMs": 30000,
+        "minTimeoutInMs": 2000,
+        "randomize": true
+      }
+    },
+    {
+      "entryPoint": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-tlEAlH/Desktop/NextFlow/src/trigger/processTask.mjs",
+      "filePath": "src/trigger/processTask.ts",
+      "id": "process-media",
+      "maxDuration": 300,
+      "retry": {
+        "factor": 2,
+        "maxAttempts": 3,
+        "maxTimeoutInMs": 30000,
+        "minTimeoutInMs": 2000,
+        "randomize": true
+      }
+    }
+  ],
+  "timings": {
+    "src/trigger/geminiTask.ts": 1.2697089999999776,
+    "src/trigger/processTask.ts": 0.37999999999999545
+  },
+  "workerEntryPoint": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-tlEAlH/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs"
+}

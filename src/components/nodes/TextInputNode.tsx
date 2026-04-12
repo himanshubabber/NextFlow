@@ -1,4 +1,4 @@
-// src/components/nodes/TextInputNode.tsx
+
 'use client';
 import React from 'react';
 import { Handle, Position } from 'reactflow';
@@ -10,9 +10,9 @@ export default function TextInputNode({ id, data }: { id: string; data: any }) {
   return (
     <div className="bg-white border-2 border-blue-400 rounded-xl p-4 shadow-xl w-64 ring-1 ring-black/5">
       <div className="flex items-center gap-2 mb-3">
-        <div className="bg-blue-100 p-1.5 rounded-lg">
+        {/* <div className="bg-blue-100 p-1.5 rounded-lg">
           <span className="text-blue-600">📝</span>
-        </div>
+        </div> */}
         <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
           Input Source
         </label>

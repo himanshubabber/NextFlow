@@ -2,8 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-// 🚀 CRITICAL: This exact type structure is what Vercel/TypeScript 
-// expects for Next.js 15+ dynamic routes.
+
 type Props = {
   params: Promise<{ runId: string }>;
 };
@@ -45,7 +44,7 @@ export async function GET(
 
     return NextResponse.json(runDetails);
   } catch (error: any) {
-    console.error("🔥 Build Safety Error:", error.message);
+    console.error("Build Safety Error:", error.message);
     return NextResponse.json(
       { error: "Internal Server Error" }, 
       { status: 500 }

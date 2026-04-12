@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 import { runs } from "@trigger.dev/sdk/v3";
 import { geminiTask } from "../../../trigger/geminiTask";
 
-// DTU CSE Knight Hack: Maximize serverless limits
 export const maxDuration = 60; 
 export const dynamic = 'force-dynamic';
 
@@ -33,7 +32,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Connect at least one Gemini node to run." }, { status: 400 });
     }
 
-    // --- 🚀 ROBUST MULTIMODAL DISCOVERY ---
+    // ---  ROBUST MULTIMODAL DISCOVERY ---
     const mediaNode = nodes.find((n: any) => 
       (n.type === 'processNode' || n.type === 'frameExtractNode' || n.type === 'uploadNode') 
       && n.data?.fileContent
@@ -52,7 +51,7 @@ export async function POST(req: Request) {
           }
         };
       } catch (e) {
-        console.error("❌ Media Parse Fail:", e);
+        console.error(" Media Parse Fail:", e);
       }
     }
 
@@ -71,14 +70,14 @@ export async function POST(req: Request) {
       )
     );
 
-    // 🚀 THE "NO-ERROR" FIX: Give workers 2 seconds to warm up before first poll
+    // THE "NO-ERROR" FIX: Give workers 2 seconds to warm up before first poll
     await new Promise((r) => setTimeout(r, 2000));
 
     const primaryHandle = runHandles[0];
     let currentRun = await runs.retrieve(primaryHandle.id);
     let attempts = 0;
     
-    // 🚀 STATUS FIX: Added 'DEQUEUED' and 'QUEUED' to prevent premature exits
+    //  STATUS FIX: Added 'DEQUEUED' and 'QUEUED' to prevent premature exits
     const pendingStatuses = ["PENDING", "EXECUTING", "QUEUED", "DEQUEUED", "REPLAYING", "WILL_RETRY"];
 
     // 5. Polling Loop with Safety Limit
@@ -86,7 +85,7 @@ export async function POST(req: Request) {
       await new Promise((r) => setTimeout(r, 2000)); 
       currentRun = await runs.retrieve(primaryHandle.id);
       attempts++;
-      console.log(`⏳ Attempt ${attempts} | Status: ${currentRun.status}`);
+      console.log(` Attempt ${attempts} | Status: ${currentRun.status}`);
     }
 
     // 6. Handle Final Result
@@ -109,7 +108,7 @@ export async function POST(req: Request) {
             }))
           }
         }
-      }).catch(err => console.error("💾 DB Save Error:", err));
+      }).catch(err => console.error("DB Save Error:", err));
 
       return NextResponse.json({ text: responseText, nodeId: output.nodeId });
     }
@@ -120,7 +119,7 @@ export async function POST(req: Request) {
     }, { status: 504 });
 
   } catch (error: any) {
-    console.error("🔥 Global API Error:", error);
+    console.error(" Global API Error:", error);
     return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
   }
 }

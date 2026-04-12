@@ -8,7 +8,7 @@ const ImageNode = ({ id, data }: NodeProps) => {
   const updateNodeData = useFlowStore((state) => state.updateNodeData);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // 🚀 Manual Trigger to bypass ReactFlow event hijacking
+  // Manual Trigger to bypass ReactFlow event hijacking
   const handleContainerClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (fileInputRef.current) {
@@ -42,7 +42,7 @@ const ImageNode = ({ id, data }: NodeProps) => {
   };
 
   return (
-    // 🚩 'nodrag' wrapper hatana mat, lekin internal input trigger manually handle karna
+    
     <div className={`p-4 border-2 border-blue-400 rounded-2xl bg-white shadow-2xl min-w-[200px] transition-all ${data.isRunning ? 'ring-4 ring-blue-500 animate-pulse' : ''}`}>
       <div className="flex flex-col gap-2 pointer-events-none">
         <label className="text-[10px] font-black text-blue-600 uppercase tracking-widest">🖼️ Image Asset</label>

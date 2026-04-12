@@ -26,7 +26,7 @@ const useFlowStore = create<FlowState>((set, get) => ({
   selectedNode: null,
   workflowId: null,
 
-  // 🔄 Handles basic node movements and selections
+  // Handles basic node movements and selections
   onNodesChange: (changes) => {
     const nextNodes = applyNodeChanges(changes, get().nodes);
     set({ nodes: nextNodes });
@@ -37,10 +37,10 @@ const useFlowStore = create<FlowState>((set, get) => ({
     }
   },
 
-  // 🔗 Handles edge (wire) removals or changes
+  // Handles edge (wire) removals or changes
   onEdgesChange: (changes) => set({ edges: applyEdgeChanges(changes, get().edges) }),
 
-  // 🚀 REACTIVE CONNECTION: Automatically pushes source data to target when connected
+  // REACTIVE CONNECTION: Automatically pushes source data to target when connected
   onConnect: (params) => {
     const { nodes, edges } = get();
     const sourceNode = nodes.find((n) => n.id === params.source);
@@ -63,7 +63,7 @@ const useFlowStore = create<FlowState>((set, get) => ({
     });
   },
 
-  // ⚡ DYNAMIC PROPAGATION: When data changes in one node, it flows to all connected nodes
+  //DYNAMIC PROPAGATION: When data changes in one node, it flows to all connected nodes
   updateNodeData: (nodeId, newData) => set((state) => {
     // 1. Update the immediate node data
     const updatedNodes = state.nodes.map((node) => 
@@ -98,7 +98,7 @@ const useFlowStore = create<FlowState>((set, get) => ({
     };
   }),
 
-  // 🛠️ Standard Setters
+  //  Standard Setters
   setNodes: (update) => set((state) => ({ 
     nodes: typeof update === 'function' ? update(state.nodes) : update 
   })),

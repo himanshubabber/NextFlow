@@ -55,7 +55,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(workflow);
   } catch (error: any) {
-    console.error("🔥 Workflow Save Error:", error.message);
+    console.error("Workflow Save Error:", error.message);
     return NextResponse.json(
       { error: "Failed to save workflow" }, 
       { status: 500 }

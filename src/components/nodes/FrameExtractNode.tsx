@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Handle, Position, useEdges, useNodes } from 'reactflow';
 import useFlowStore from '@/store/useFlowStore';
 
-// 🚀 Step 1: Define an Interface to tell TypeScript what "data" looks like
+// Step 1: Define an Interface to tell TypeScript what "data" looks like
 interface VideoNodeData {
   videoUrl?: string;
   fileContent?: string;
@@ -19,7 +19,7 @@ export default function FrameExtractNode({ id, data }: { id: string; data: any }
   const [preview, setPreview] = useState<string | null>(data.fileContent || null);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
-  // 🚀 Step 2: Extract Video URL with proper Type Casting
+  //  Step 2: Extract Video URL with proper Type Casting
   const edge = edges.find((e) => e.target === id);
   const sourceNode = edge ? nodes.find((n) => n.id === edge.source) : null;
   

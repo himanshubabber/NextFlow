@@ -17,7 +17,7 @@ interface GeminiPayload {
 export const geminiTask = task({
   id: "gemini-llm",
   run: async (payload: GeminiPayload) => {
-    // 🚀 API Key validation
+    //  API Key validation
     const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
     if (!apiKey) throw new Error("CRITICAL: API Key missing in environment.");
 
@@ -51,7 +51,6 @@ export const geminiTask = task({
             }
           });
           
-          // 🚀 GALAXY AI ENHANCEMENT: Context injection for video nodes
           if (nodeId.toLowerCase().includes("video")) {
             promptParts.push({ text: "Note: The attached media is a high-resolution keyframe extracted from a video recording for spatial analysis." });
           }

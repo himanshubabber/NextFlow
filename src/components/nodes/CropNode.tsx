@@ -111,11 +111,7 @@ export default function CropNode({ id, data }: { id: string; data: any }) {
         </label>
       ) : (
         <div className="space-y-4">
-          {/* 🚀 THE DYNAMIC SIZE FIX:
-              - h-auto and max-h-96 keep the node height manageable.
-              - inline-flex wraps the image perfectly for 100% mouse range.
-              - overflow-hidden on the outer container keeps the node rounded and clean.
-          */}
+          
           <div 
             className="w-full h-auto min-h-[200px] max-h-96 rounded-lg border border-orange-100 nodrag nopan nowheel bg-slate-50 flex items-center justify-center p-1 overflow-hidden"
             onMouseDown={stopPropagation}

@@ -7,7 +7,7 @@ export async function GET() {
     const { userId } = await auth();
     if (!userId) return new NextResponse("Unauthorized", { status: 401 });
 
-    console.log("🔍 Fetching history for User:", userId);
+    console.log(" Fetching history for User:", userId);
 
     const history = await prisma.run.findMany({
       where: {
@@ -27,10 +27,10 @@ export async function GET() {
       },
     });
 
-    console.log(`📊 Neon found ${history.length} runs.`);
+    console.log(`Neon found ${history.length} runs.`);
     return NextResponse.json(history);
   } catch (error: any) {
-    console.error("❌ History API Error:", error.message);
+    console.error(" History API Error:", error.message);
     return NextResponse.json({ error: "Failed to fetch history" }, { status: 500 });
   }
 }

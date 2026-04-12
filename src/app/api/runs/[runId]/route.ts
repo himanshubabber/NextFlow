@@ -2,33 +2,39 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-// ✅ Type safety for Next.js 15
-interface RouteContext {
+// 🚀 CRITICAL: This exact type structure is what Vercel/TypeScript 
+// expects for Next.js 15+ dynamic routes.
+type Props = {
   params: Promise<{ runId: string }>;
-}
+};
 
 export async function GET(
-  req: NextRequest,
-  context: RouteContext
+  request: NextRequest,
+  { params }: Props
 ) {
   try {
+    // 1. Auth Check
     const { userId } = await auth();
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // 🚀 THE CRITICAL FIX: Await the promise
-    const { runId } = await context.params;
+    // 2. Resolve the Params Promise
+    // Next.js now treats params as a Promise that must be awaited.
+    const resolvedParams = await params;
+    const runId = resolvedParams.runId;
 
+    // 3. Validation
     if (!runId || runId === "undefined") {
-      return NextResponse.json({ error: "Run ID is missing" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid Run ID" }, { status: 400 });
     }
 
+    // 4. DB Retrieval
     const runDetails = await prisma.run.findUnique({
       where: { id: runId },
       include: {
         nodeRuns: {
-          orderBy: { startedAt: 'desc' },
+          orderBy: { startedAt: 'desc' }
         },
       },
     });
@@ -39,7 +45,10 @@ export async function GET(
 
     return NextResponse.json(runDetails);
   } catch (error: any) {
-    console.error("🔥 Build Error Fix:", error.message);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    console.error("🔥 Build Safety Error:", error.message);
+    return NextResponse.json(
+      { error: "Internal Server Error" }, 
+      { status: 500 }
+    );
   }
 }

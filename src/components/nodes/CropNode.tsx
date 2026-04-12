@@ -71,7 +71,7 @@ export default function CropNode({ id, data }: { id: string; data: any }) {
           0, 0, pixelCrop.width, pixelCrop.height
         );
         
-        // Quality 0.3 to keep Base64 strings small for storage/API
+        
         const base64 = canvas.toDataURL('image/jpeg', 0.3);
         updateNodeData(id, { 
           fileContent: base64, 
@@ -100,7 +100,7 @@ export default function CropNode({ id, data }: { id: string; data: any }) {
   };
 
   return (
-    /* Node Container: border color set to blue-400 for standard state */
+   
     <div className="bg-white border-2 border-blue-400 rounded-2xl p-4 shadow-2xl w-80 relative transition-all duration-300">
       <Handle type="target" position={Position.Left} className="w-4 h-4 bg-blue-500 border-2 border-white -left-2" />
 

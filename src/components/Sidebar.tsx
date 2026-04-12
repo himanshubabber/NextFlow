@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { toast } from 'sonner';
 import useFlowStore from '@/store/useFlowStore';
 
-// 🚀 Icons for the Sidebar
+
 import { Settings2, History, Database, RefreshCw } from 'lucide-react';
 
 interface RunHistoryItem {
@@ -116,7 +116,7 @@ export default function Sidebar() {
             {selectedNode.type === 'llmNode' && (
               <div className="space-y-2 flex flex-col">
                 <label className="text-[9px] font-bold text-purple-500 uppercase">Gemini Output</label>
-                {/* 🚀 FIXED: max-h-[50vh] locks height to 50% of the screen with internal scrollbar */}
+               
                 <div className="p-3 bg-[#050505] text-gray-200 text-[11px] leading-relaxed rounded-xl shadow-lg font-medium border border-white/5 overflow-y-auto max-h-[50vh] scrollbar-hide">
                   {selectedNode.data.result || "// Run the workflow to see AI response"}
                 </div>

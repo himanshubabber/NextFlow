@@ -4,6 +4,7 @@ import {
   addEdge, applyNodeChanges, applyEdgeChanges 
 } from 'reactflow';
 
+// --- TS Interface for Galaxy AI Flow ---
 interface FlowState {
   nodes: Node[];
   edges: Edge[];
@@ -25,42 +26,79 @@ const useFlowStore = create<FlowState>((set, get) => ({
   selectedNode: null,
   workflowId: null,
 
+  // 🔄 Handles basic node movements and selections
   onNodesChange: (changes) => {
     const nextNodes = applyNodeChanges(changes, get().nodes);
     set({ nodes: nextNodes });
+    
     const selection = changes.find((c) => c.type === 'select' && c.selected);
     if (selection && 'id' in selection) {
       set({ selectedNode: nextNodes.find(n => n.id === selection.id) || null });
     }
   },
 
+  // 🔗 Handles edge (wire) removals or changes
   onEdgesChange: (changes) => set({ edges: applyEdgeChanges(changes, get().edges) }),
 
-  // ✅ CORRECTED: Data Transfer Logic added to onConnect
+  // 🚀 REACTIVE CONNECTION: Automatically pushes source data to target when connected
   onConnect: (params) => {
     const { nodes, edges } = get();
     const sourceNode = nodes.find((n) => n.id === params.source);
     
-    // Create new edges
-    const newEdges = addEdge({ ...params, animated: true }, edges);
-
-    // If source has data, push it to target and refresh the nodes array
-    if (sourceNode?.data?.previewUrl) {
-      const nextNodes = nodes.map((node) => {
-        if (node.id === params.target) {
-          return {
-            ...node,
-            data: { ...node.data, previewUrl: sourceNode.data.previewUrl }
-          };
-        }
-        return node;
+    // Auto-link media data if source already has it
+    if (sourceNode?.data?.fileContent || sourceNode?.data?.videoUrl) {
+      get().updateNodeData(params.target!, {
+        fileContent: sourceNode.data.fileContent || null,
+        videoUrl: sourceNode.data.videoUrl || null,
+        fileType: sourceNode.data.fileType || 'image/jpeg'
       });
-      set({ nodes: nextNodes, edges: newEdges });
-    } else {
-      set({ edges: newEdges });
     }
+
+    set({ 
+      edges: addEdge({ 
+        ...params, 
+        animated: true, 
+        style: { stroke: '#8b5cf6', strokeWidth: 2 } 
+      }, edges) 
+    });
   },
 
+  // ⚡ DYNAMIC PROPAGATION: When data changes in one node, it flows to all connected nodes
+  updateNodeData: (nodeId, newData) => set((state) => {
+    // 1. Update the immediate node data
+    const updatedNodes = state.nodes.map((node) => 
+      node.id === nodeId ? { ...node, data: { ...node.data, ...newData } } : node
+    );
+
+    // 2. Optimized Propagation: Sync to downstream targets
+    const connectedEdges = state.edges.filter(e => e.source === nodeId);
+    const targetIds = new Set(connectedEdges.map(e => e.target));
+
+    const finalNodes = updatedNodes.map(node => {
+      if (targetIds.has(node.id)) {
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            // Sync media keys only
+            fileContent: newData.fileContent ?? node.data.fileContent,
+            videoUrl: newData.videoUrl ?? node.data.videoUrl,
+            fileType: newData.fileType ?? node.data.fileType
+          }
+        };
+      }
+      return node;
+    });
+
+    return {
+      nodes: finalNodes,
+      selectedNode: state.selectedNode?.id === nodeId 
+        ? { ...state.selectedNode, data: { ...state.selectedNode.data, ...newData } }
+        : state.selectedNode
+    };
+  }),
+
+  // 🛠️ Standard Setters
   setNodes: (update) => set((state) => ({ 
     nodes: typeof update === 'function' ? update(state.nodes) : update 
   })),
@@ -71,16 +109,6 @@ const useFlowStore = create<FlowState>((set, get) => ({
   
   setWorkflowId: (id) => set({ workflowId: id }),
   setSelectedNode: (node) => set({ selectedNode: node }),
-
-  updateNodeData: (nodeId, newData) => set((state) => {
-    const updatedNodes = state.nodes.map((node) => 
-      node.id === nodeId ? { ...node, data: { ...node.data, ...newData } } : node
-    );
-    const updatedSelectedNode = state.selectedNode?.id === nodeId 
-      ? updatedNodes.find(n => n.id === nodeId) || null
-      : state.selectedNode;
-    return { nodes: updatedNodes, selectedNode: updatedSelectedNode };
-  }),
 }));
 
 export default useFlowStore;

@@ -1,117 +1,109 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Handle, Position } from 'reactflow';
 import useFlowStore from '@/store/useFlowStore';
+import { toast } from 'sonner';
 
 export default function VideoAssetNode({ id, data }: { id: string; data: any }) {
   const updateNodeData = useFlowStore((state) => state.updateNodeData);
-  const [status, setStatus] = useState<'idle' | 'processing' | 'error'>('idle');
+  const [loading, setLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const onVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // 1. Galaxy AI Check: Limit input size to 50MB for browser stability
-    if (file.size > 50 * 1024 * 1024) {
-      alert("File is too heavy for client-side processing. Please use a smaller clip.");
-      return;
-    }
-
-    setStatus('processing');
+    setLoading(true);
     const tempUrl = URL.createObjectURL(file);
+    const toastId = toast.loading("Galaxy AI: Sampling Video...");
     
     try {
-      const compressedFrame = await extractFrameWithTimeout(tempUrl);
-      
-      updateNodeData(id, { 
-        fileContent: compressedFrame, 
-        fileType: 'image/jpeg',
-        fileName: file.name,
+      const frameBase64 = await new Promise<string>((resolve, reject) => {
+        const video = document.createElement('video');
+        video.src = tempUrl;
+        video.muted = true; video.playsInline = true; video.crossOrigin = "anonymous";
+        
+        video.onloadedmetadata = () => { video.currentTime = 0.5; };
+        video.onseeked = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = video.videoWidth * 0.5;
+          canvas.height = video.videoHeight * 0.5;
+          canvas.getContext('2d')?.drawImage(video, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg', 0.7));
+          video.remove();
+        };
+        video.onerror = () => reject("Load Error");
+        video.load();
       });
-      setStatus('idle');
+
+      updateNodeData(id, { 
+        fileContent: frameBase64, 
+        fileName: file.name,
+        videoUrl: tempUrl,
+        fileType: 'image/jpeg'
+      });
+      toast.success("Video Frame Ready", { id: toastId });
     } catch (err) {
-      console.error("Extraction failed:", err);
-      setStatus('error');
-      alert("Processing failed. Try a different video format (mp4 recommended).");
+      toast.error("Video processing failed", { id: toastId });
     } finally {
-      URL.revokeObjectURL(tempUrl);
+      setLoading(false);
     }
-  };
-
-  // 🚀 ENGINEERING FIX: Added a timeout to prevent infinite loading
-  const extractFrameWithTimeout = (url: string): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const video = document.createElement('video');
-      video.src = url;
-      video.crossOrigin = "anonymous";
-      video.muted = true;
-      video.playsInline = true;
-
-      const timeout = setTimeout(() => {
-        video.remove();
-        reject(new Error("Video processing timed out"));
-      }, 10000); // 10 second timeout
-
-      video.onloadedmetadata = () => {
-        // Seek to 10% of video or 1s, whichever is better
-        video.currentTime = Math.min(video.duration * 0.1, 1);
-      };
-
-      video.onseeked = () => {
-        clearTimeout(timeout);
-        const canvas = document.createElement('canvas');
-        const scale = Math.min(800 / video.videoWidth, 1); // Max width 800px
-        canvas.width = video.videoWidth * scale;
-        canvas.height = video.videoHeight * scale;
-        
-        const ctx = canvas.getContext('2d');
-        ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
-        
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
-        video.remove();
-        resolve(dataUrl);
-      };
-
-      video.onerror = () => {
-        clearTimeout(timeout);
-        reject(new Error("Video load error"));
-      };
-
-      video.load();
-    });
   };
 
   return (
-    <div className="bg-white border-2 border-emerald-500 rounded-2xl p-4 shadow-2xl w-72">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2 text-emerald-600 font-black text-[10px] uppercase">
-          <span>🎥</span> AI Video Ingestor
+    /* 🚀 FIX 1: Removed 'nodrag' and 'nopan' from the main wrapper.
+       Ab aap isse header ya border se pakad kar move kar sakte hain.
+    */
+    <div className="bg-white border-2 border-emerald-500 rounded-2xl p-4 shadow-2xl w-64 relative group transition-all hover:shadow-emerald-100">
+      
+      <div className="flex items-center justify-between mb-3 pointer-events-none">
+        <div className="flex items-center gap-2">
+          <div className="bg-emerald-100 p-1.5 rounded-lg text-emerald-600 text-sm">🎥</div>
+          <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            Video Ingestor
+          </label>
         </div>
-        {status === 'processing' && (
-          <div className="w-2 h-2 bg-orange-500 rounded-full animate-ping" />
-        )}
       </div>
 
-      <label className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-xl cursor-pointer transition-all ${
-        status === 'error' ? 'border-red-300 bg-red-50' : 'border-emerald-100 hover:bg-emerald-50'
-      }`}>
-        <div className="text-center p-2">
-          <p className="text-[10px] font-bold text-emerald-600">
-            {status === 'processing' ? 'EXTRACTING AI FRAME...' : 'DROP VIDEO HERE'}
-          </p>
-          <p className="text-[8px] text-slate-400 mt-1">MP4, MOV up to 50MB</p>
-        </div>
-        <input type="file" className="hidden" accept="video/*" onChange={onVideoUpload} />
-      </label>
+      <div className="relative">
+        {/* 🚀 FIX 2: Added 'nodrag' ONLY to the clickable area */}
+        <div 
+          onClick={() => fileInputRef.current?.click()}
+          onPointerDown={(e) => e.stopPropagation()}
+          className="nodrag relative w-full h-32 border-2 border-dashed border-emerald-200 rounded-xl cursor-pointer bg-slate-50 flex items-center justify-center transition-all hover:bg-emerald-50 overflow-hidden"
+        >
+          {loading ? (
+            <span className="text-[8px] font-bold text-emerald-600 animate-pulse">SAMPLING...</span>
+          ) : data.fileContent ? (
+            <img src={data.fileContent} className="w-full h-full object-cover pointer-events-none" />
+          ) : (
+            <div className="text-center pointer-events-none">
+              <span className="text-2xl mb-1">📁</span>
+              <p className="text-[10px] font-bold text-slate-400 uppercase">Upload Video</p>
+            </div>
+          )}
 
-      {data.fileName && status === 'idle' && (
-        <div className="mt-3 p-2 bg-emerald-50 rounded-lg border border-emerald-100">
-          <p className="text-[9px] text-emerald-700 font-bold truncate">✅ {data.fileName}</p>
-          <p className="text-[8px] text-emerald-500">Frame extracted for Galaxy AI analysis</p>
+          <input 
+            ref={fileInputRef}
+            type="file" 
+            accept="video/*" 
+            onChange={onVideoUpload}
+            className="hidden" 
+          />
         </div>
-      )}
+      </div>
 
-      <Handle type="source" position={Position.Right} className="w-3 h-3 bg-emerald-500 border-white" />
+      <div className="mt-2 flex items-center justify-between pointer-events-none">
+        <p className="text-[9px] text-gray-400 font-mono truncate w-full italic text-center">
+          {data.fileName || 'Wait for asset...'}
+        </p>
+      </div>
+
+      <Handle 
+        type="source" 
+        position={Position.Right} 
+        className="w-3 h-3 bg-emerald-500 border-2 border-white" 
+      />
     </div>
   );
 }

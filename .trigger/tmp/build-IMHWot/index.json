@@ -1,5 +1,5 @@
 {
-  "configPath": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/trigger.config.mjs",
+  "configPath": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-IMHWot/Desktop/NextFlow/trigger.config.mjs",
   "customConditions": [
   ],
   "queues": [
@@ -8,7 +8,7 @@
   "runtimeVersion": "22.13.1",
   "tasks": [
     {
-      "entryPoint": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/src/trigger/geminiTask.mjs",
+      "entryPoint": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-IMHWot/Desktop/NextFlow/src/trigger/geminiTask.mjs",
       "filePath": "src/trigger/geminiTask.ts",
       "id": "gemini-llm",
       "maxDuration": 300,
@@ -21,7 +21,7 @@
       }
     },
     {
-      "entryPoint": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/Desktop/NextFlow/src/trigger/processTask.mjs",
+      "entryPoint": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-IMHWot/Desktop/NextFlow/src/trigger/processTask.mjs",
       "filePath": "src/trigger/processTask.ts",
       "id": "process-media",
       "maxDuration": 300,
@@ -35,8 +35,8 @@
     }
   ],
   "timings": {
-    "src/trigger/geminiTask.ts": 1.27366600000002,
-    "src/trigger/processTask.ts": 0.413833000000011
+    "src/trigger/geminiTask.ts": 1.225999999999999,
+    "src/trigger/processTask.ts": 0.37445900000000165
   },
-  "workerEntryPoint": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-8aYOxM/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs"
+  "workerEntryPoint": "/Users/himanshusingh/Desktop/NextFlow/.trigger/tmp/build-IMHWot/.npm/_npx/f51a09bd0abf5f10/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs"
 }

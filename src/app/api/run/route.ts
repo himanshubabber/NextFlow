@@ -4,123 +4,123 @@ import { NextResponse } from "next/server";
 import { runs } from "@trigger.dev/sdk/v3";
 import { geminiTask } from "../../../trigger/geminiTask";
 
-// --- NEXT.JS APP ROUTER CONFIGS (For Heavy Payloads & Long Tasks) ---
+// DTU CSE Knight Hack: Maximize serverless limits
 export const maxDuration = 60; 
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
   try {
-    // 0. Auth Check
-    const { userId } = await auth();
-    if (!userId) return new NextResponse("Unauthorized", { status: 401 });
+    // 1. Auth Guard
+    const authSession = await auth();
+    const userId = authSession?.userId;
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
-    // 1. Parsing Request Body
+    // 2. Body Validation
     const body = await req.json();
-    const { nodes, edges, workflowId } = body;
+    const { nodes = [], edges = [], workflowId } = body;
 
-    // 2. Validation: Ensure Workflow is saved first
     if (!workflowId) {
       return NextResponse.json({ 
-        error: "Workflow ID missing. Please save the workflow to Neon before running." 
+        error: "Workflow ID missing. Save your progress first!" 
       }, { status: 400 });
     }
 
-    // 3. Find the LLM nodes
+    // 3. Logic Check: Find Gemini Nodes
     const llmNodes = nodes.filter((n: any) => n.type === 'llmNode');
     if (llmNodes.length === 0) {
-      return NextResponse.json({ error: "No Gemini LLM nodes found in canvas." }, { status: 400 });
+      return NextResponse.json({ error: "Connect at least one Gemini node to run." }, { status: 400 });
     }
 
-    // 4. UPDATED MULTIMODAL DISCOVERY: Detects Upload, Crop, OR Frame Extract Nodes
-    const uploadNode = nodes.find((n: any) => n.type === 'uploadNode');
-    const cropNode = nodes.find((n: any) => n.type === 'cropNode'); 
-    const frameNode = nodes.find((n: any) => n.type === 'frameExtractNode'); // ✅ Added Frame Node support
-    
-    // Priority Logic: Frame extraction takes highest priority, then Crop, then standard Upload
-    const assetNode = frameNode || cropNode || uploadNode; 
-    
+    // --- 🚀 ROBUST MULTIMODAL DISCOVERY ---
+    const mediaNode = nodes.find((n: any) => 
+      (n.type === 'processNode' || n.type === 'frameExtractNode' || n.type === 'uploadNode') 
+      && n.data?.fileContent
+    );
+
     let mediaData = null;
+    if (mediaNode?.data?.fileContent) {
+      try {
+        const fullContent = mediaNode.data.fileContent;
+        const base64Data = fullContent.includes(',') ? fullContent.split(',')[1] : fullContent;
 
-    if (assetNode?.data?.fileContent) {
-      console.log(`🖼️ Processing Asset from ${assetNode.type}: ${assetNode.data.fileName || 'extracted_frame'}`);
-      mediaData = {
-        inlineData: {
-          data: assetNode.data.fileContent.split(',')[1], 
-          mimeType: assetNode.data.fileType || 'image/jpeg'
-        }
-      };
+        mediaData = {
+          inlineData: {
+            data: base64Data,
+            mimeType: mediaNode.data.fileType || 'image/jpeg'
+          }
+        };
+      } catch (e) {
+        console.error("❌ Media Parse Fail:", e);
+      }
     }
 
-    // 5. PROMPT DISCOVERY
     const textInputNode = nodes.find((n: any) => n.type === 'textNode');
-    const finalUserMessage = textInputNode?.data?.userMessage || llmNodes[0].data?.userMessage || "Describe this content.";
+    const finalUserMessage = textInputNode?.data?.userMessage || "Analyze this content.";
 
-    console.log("🚀 Triggering Galaxy AI Pipeline...");
-
-    // 6. Trigger Trigger.dev Tasks
+    // 4. Trigger Trigger.dev Tasks
     const runHandles = await Promise.all(
       llmNodes.map((node: any) => 
         geminiTask.trigger({ 
           userMessage: finalUserMessage,
-          systemPrompt: node.data?.systemPrompt || "You are a helpful Galaxy AI assistant.",
+          systemPrompt: node.data?.systemPrompt || "You are an expert visual analyzer.",
           nodeId: node.id,
           media: mediaData 
         })
       )
     );
 
+    // 🚀 THE "NO-ERROR" FIX: Give workers 2 seconds to warm up before first poll
+    await new Promise((r) => setTimeout(r, 2000));
+
     const primaryHandle = runHandles[0];
     let currentRun = await runs.retrieve(primaryHandle.id);
     let attempts = 0;
     
-    // 7. Robust Polling
-    while (["PENDING", "EXECUTING", "QUEUED", "DEQUEUED"].includes(currentRun.status) && attempts < 60) {
-      await new Promise((r) => setTimeout(r, 2000));
+    // 🚀 STATUS FIX: Added 'DEQUEUED' and 'QUEUED' to prevent premature exits
+    const pendingStatuses = ["PENDING", "EXECUTING", "QUEUED", "DEQUEUED", "REPLAYING", "WILL_RETRY"];
+
+    // 5. Polling Loop with Safety Limit
+    while (pendingStatuses.includes(currentRun.status) && attempts < 45) {
+      await new Promise((r) => setTimeout(r, 2000)); 
       currentRun = await runs.retrieve(primaryHandle.id);
       attempts++;
+      console.log(`⏳ Attempt ${attempts} | Status: ${currentRun.status}`);
     }
 
+    // 6. Handle Final Result
     if (currentRun.status === "COMPLETED") {
       const output = currentRun.output as { text: string; nodeId: string };
-      const llmResponseText = output.text || "Gemini returned an empty response.";
+      const responseText = output.text || "Analysis complete (no text returned).";
 
-      // 8. PERSISTENCE: Save Run to Neon Database
-      try {
-        await prisma.run.create({
-          data: {
-            workflow: {
-              connect: { id: workflowId }
-            },
-            triggerRunId: primaryHandle.id, 
-            status: "SUCCESS",
-            nodeRuns: {
-              create: llmNodes.map((node: any) => ({
-                nodeId: node.id,
-                nodeType: "llmNode",
-                status: "SUCCESS",
-                outputs: {
-                  response: llmResponseText,
-                }
-              }))
-            }
+      // Async DB logging (non-blocking)
+      prisma.run.create({
+        data: {
+          workflow: { connect: { id: workflowId } },
+          triggerRunId: primaryHandle.id, 
+          status: "SUCCESS",
+          nodeRuns: {
+            create: llmNodes.map((node: any) => ({
+              nodeId: node.id,
+              nodeType: "llmNode",
+              status: "SUCCESS",
+              outputs: { response: responseText }
+            }))
           }
-        });
-      } catch (dbError) {
-        console.error("💾 NEON DB ERROR (Non-blocking):", dbError);
-      }
+        }
+      }).catch(err => console.error("💾 DB Save Error:", err));
 
-      return NextResponse.json({ 
-        text: llmResponseText, 
-        nodeId: output.nodeId 
-      });
+      return NextResponse.json({ text: responseText, nodeId: output.nodeId });
     }
 
+    // 7. Timeout or Error Fallback
     return NextResponse.json({ 
-      error: `Workflow timed out or failed with status: ${currentRun.status}` 
+      error: `Workflow failed or timed out. Last status: ${currentRun.status}` 
     }, { status: 504 });
 
   } catch (error: any) {
-    console.error("🔥 CRITICAL API ERROR:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("🔥 Global API Error:", error);
+    return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
   }
 }

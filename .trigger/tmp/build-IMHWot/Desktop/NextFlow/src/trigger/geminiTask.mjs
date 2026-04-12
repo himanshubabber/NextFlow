@@ -1103,18 +1103,24 @@ var geminiTask = task({
         promptParts.push({ text: `Instructions: ${systemPrompt}` });
       }
       if (media && media.inlineData) {
-        promptParts.push({
-          inlineData: {
-            data: media.inlineData.data,
-            mimeType: media.inlineData.mimeType
+        if (media.inlineData.data) {
+          promptParts.push({
+            inlineData: {
+              data: media.inlineData.data,
+              mimeType: media.inlineData.mimeType || "image/jpeg"
+            }
+          });
+          if (nodeId.toLowerCase().includes("video")) {
+            promptParts.push({ text: "Note: The attached media is a high-resolution keyframe extracted from a video recording for spatial analysis." });
           }
-        });
+        }
       }
       promptParts.push({ text: `Query: ${userMessage}` });
       const result = await model.generateContent(promptParts);
       const response = await result.response;
       const text = response.text();
-      if (!text) throw new Error("Gemini 3 returned empty response.");
+      if (!text) throw new Error("Gemini 3 returned an empty response.");
+      console.log(`✅ Node [${nodeId}]: Analysis successful.`);
       return {
         text,
         nodeId
@@ -1122,7 +1128,10 @@ var geminiTask = task({
     } catch (error) {
       console.error("Gemini 3 Execution Error:", error);
       if (error.message.includes("404")) {
-        throw new Error("MODEL_MISMATCH: Ensure your AI Studio project has Gemini 3 access enabled.");
+        throw new Error("MODEL_MISMATCH: Verify Gemini 3 Flash access in AI Studio.");
+      }
+      if (error.message.includes("safety")) {
+        throw new Error("SAFETY_BLOCK: The model flagged the content.");
       }
       throw error;
     }

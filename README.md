@@ -52,5 +52,4 @@ The system is built on a modular node registry, allowing specialized components 
 
 **Himanshu** Final Year Computer Science Engineering student at **Delhi Technological University (DTU)**. 
 * **LinkedIn:** [Himanshu Singh](https://www.linkedin.com/in/himanshu-singh-94802b257/)
-* **Knight-ranked** Competitive Programmer on LeetCode.
 * Full-Stack Specialist with deep expertise in AI-integrated system design.
